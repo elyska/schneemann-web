@@ -1,0 +1,94 @@
+/****************** NAVIGATION *******************/
+
+nav {
+    width: 80%;
+    text-align: left;
+}
+
+nav figure:nth-of-type(1), nav figure:nth-of-type(2) { /*menu, close*/
+    display: none !important;
+}
+
+nav figure:nth-of-type(3) { /*logo*/
+    display: inline-block;
+    float: none;
+}
+
+nav figure:nth-of-type(5) { /*cart*/
+    display: inline-block;
+    margin-right: 2vw;
+}
+
+nav figure:nth-of-type(4) { /*translate*/
+    position: static;
+    display: inline-block;
+    float: right;
+}
+nav figure:nth-of-type(4) figcaption { /* translate */
+    display:inline-block;
+}
+
+nav ul:first-of-type li {
+    list-style-type: none;
+    border: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+    margin-right: 5vw;
+    display: inline-block;
+}
+
+nav ul:first-of-type {
+    position: static;
+    z-index: 0;
+    font-weight: 100;
+    clear: both;
+    display: inline-block;
+    padding: 0;
+    width: max-content;
+    margin-left: 4vw;
+    transform: translate(0%, -25%);
+}
+
+/* language dropdown */
+nav ul:first-of-type {
+    /*display: none;
+    position: absolute;
+    margin: 0;
+    padding: 10px;
+    top: 40px !important;
+    right: 9%;
+    z-index: 0;
+    opacity: 0;
+    transition: top 1s, opacity 0.3s;
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px -3px grey;*/
+}
+
+nav ul:last-of-type li {
+    color: var(--typeface);
+    display: block;
+    margin-left: 0;
+    font-size: 18px;
+    list-style-type: none;
+}
+
+nav ul:last-of-type {
+    display: none !important;
+    position: absolute;
+    margin: 0;
+    padding: 10px;
+    top: 40px !important;
+    right: 9.3%;
+    z-index: 0;
+    transition: top 0s, opacity 0.3s;
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px -3px grey;
+}
+
