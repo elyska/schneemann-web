@@ -10,5 +10,14 @@
     "Verify Email Address": "Ověření emailové adresy",
     "Please click the button below to verify your email address.": "Kliknutím na následující tlačítko ověříte svoji emailovou adresu.",
     "If you did not create an account, no further action is required.": "Jestliže jste nežádali o nový účet, tento email ignorujte.",
-    "Hello": "Ahoj"
+    "Hello": "Ahoj",
+    "Hello!": "Dobrý den!",
+    "Regards": "S přáním hezkého dne",
+    "If you did not request a password reset, no further action is required.": "Jestliže jste nežádali o změnu hesla, tento email ignorujte.",
+    "You are receiving this email because we received a password reset request for your account.": "Tento emil Vám posíláme, protože jsme obdrželi požadavek na změnu hesla.",
+    "Reset Password": "Změnit heslo",
+    "This password reset link will expire in :count minutes.": "Tento odkaz pro změnu hesla vyprší po 60 minutách.",
+    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below into your web browser:": "Pokud Vám tlačítko \":actionText\" nefunguje, zkopírujte a vložte následující adresu URL do svého webového prohlížeče:",
+    "Verify Your Email Address": "Ověřte svoji emailovou adresu"
+
 }
