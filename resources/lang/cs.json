@@ -1,0 +1,14 @@
+{
+    "Login": "Přihlášení",
+    "Register": "Registrace",
+    "Email Address": "E-mailová adresa",
+    "Password": "Heslo",
+    "Confirm Password": "Potvrdit heslo",
+    "Remember Me": "Zapamatovat si mě",
+    "Forgot Your Password?": "Zapomněli jste heslo?",
+    "Name": "Jméno",
+    "Verify Email Address": "Ověření emailové adresy",
+    "Please click the button below to verify your email address.": "Kliknutím na následující tlačítko ověříte svoji emailovou adresu.",
+    "If you did not create an account, no further action is required.": "Jestliže jste nežádali o nový účet, tento email ignorujte.",
+    "Hello": "Ahoj"
+}

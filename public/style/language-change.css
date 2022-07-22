@@ -1,0 +1,11 @@
+button {
+    border: none;
+    background: transparent;
+}
+button:hover {
+    text-decoration: underline;
+}
+
+.selected { /* highlights selected language */
+    background: red;
+}

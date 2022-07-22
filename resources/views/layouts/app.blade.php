@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link href="/style/language-change.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div id="app">
@@ -38,6 +40,26 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+
+                        <!-- Language Change -->
+                        <form action="/changeLanguage" method="post">
+                            @csrf
+                            <button @if(isset($_COOKIE["language"]) && $_COOKIE["language"] == "cs")
+                                    class="selected"
+                                    @endif
+                                    type="button">
+                                CS
+                            </button>
+                            <button @if(isset($_COOKIE["language"]) && $_COOKIE["language"] == "en")
+                                    class="selected"
+                                    @endif
+                                    type="button">
+                                EN
+                            </button>
+
+                            <input type="hidden" name="language" value="">
+                        </form>
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -79,5 +101,8 @@
             @yield('content')
         </main>
     </div>
+
+
+    <script type="module" src="/script/language-change.js"></script>
 </body>
 </html>
