@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70d90ac85f0fd9862b1484632611eff6",
+    "content-hash": "143da2607834c9949a0529b189174579",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2073,6 +2073,84 @@
                 "source": "https://github.com/nette/utils/tree/v3.2.7"
             },
             "time": "2022-01-24T11:29:14+00:00"
+        },
+        {
+            "name": "nextapps/laravel-verification-code",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextapps-be/laravel-verification-code.git",
+                "reference": "b59361f285e7e095b8efdd3bf317de3f97be95df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextapps-be/laravel-verification-code/zipball/b59361f285e7e095b8efdd3bf317de3f97be95df",
+                "reference": "b59361f285e7e095b8efdd3bf317de3f97be95df",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^7.0|^8.0|^9.0",
+                "illuminate/notifications": "^7.0|^8.0|^9.0",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "php": "^7.3|^7.4|^8.0|^8.1"
+            },
+            "require-dev": {
+                "adamwojs/php-cs-fixer-phpdoc-force-fqcn": "^2.0",
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^9.1",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NextApps\\VerificationCode\\VerificationCodeServiceProvider"
+                    ],
+                    "aliases": {
+                        "VerificationCode": "NextApps\\VerificationCode\\VerificationCode"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NextApps\\VerificationCode\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evert Arnould",
+                    "email": "evert@nextapps.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Günther Debrauwer",
+                    "email": "gunther@nextapps.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Philippe Damen",
+                    "email": "philippe@nextapps.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple way to authenticate a user using a verification code.",
+            "homepage": "https://github.com/nextapps-be/laravel-verification-code",
+            "keywords": [
+                "Authentication",
+                "laravel",
+                "nextapps",
+                "verification"
+            ],
+            "support": {
+                "issues": "https://github.com/nextapps-be/laravel-verification-code/issues",
+                "source": "https://github.com/nextapps-be/laravel-verification-code/tree/1.2.3"
+            },
+            "time": "2022-05-18T11:57:33+00:00"
         },
         {
             "name": "nikic/php-parser",

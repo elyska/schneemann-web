@@ -13,11 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\GeneralController::class, 'index']);
-
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+// General
+Route::get('/', [App\Http\Controllers\GeneralController::class, 'index']);
 
 Route::post('/changeLanguage', [App\Http\Controllers\GeneralController::class, 'changeLanguage'])->name('changeLanguage');
+
+// Home
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['twofactor']);
+
+// TwoFactor
+Route::get('/two-factor', [App\Http\Controllers\TwoFactorController::class, 'index'])->name('verify.index');
+Route::get('/send-code', [App\Http\Controllers\TwoFactorController::class, 'sendCode']);
+
+Route::post('/check-code', [App\Http\Controllers\TwoFactorController::class, 'checkCode']);

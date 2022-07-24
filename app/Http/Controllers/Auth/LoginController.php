@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\App;
+use NextApps\VerificationCode\VerificationCode;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,16 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function authenticated(Request $request, $user)
+    {
+        // if the user verified the account on this device before, do not require a code again
+        if(!isset($_COOKIE['trusted-device']) || !in_array($user->email, json_decode($request->cookie('trusted-device')))) { //|| in_array(json_decode($request->cookie('trusted-device')), $user->email)
+            VerificationCode::send($user->email);
+        }/*
+        else {
+            $cookie = json_decode($request->cookie('trusted-device'));
+            dd(in_array($user->email, $cookie));
+        }*/
     }
 }
