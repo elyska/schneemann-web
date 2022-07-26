@@ -23,5 +23,9 @@
     "Before proceeding, please check your email for a verification link.": "Než budete pokračovat, zkontrolujte prosím svoji emailovou schránku.",
     "If you did not receive the email": "Jestliže jste neobdrželi ověřovací email",
     "click here to request another": "klikněte zde",
-    "Logout": "Odhlásit"
+    "Logout": "Odhlásit",
+    "Send Password Reset Link": "Obnovit heslo",
+    "Your verification code": "Váš ověřovací kód",
+    "Your verification code: :code": "Váš ověřovací kód: :code",
+    "Home": "Domů"
 }
