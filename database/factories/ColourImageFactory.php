@@ -14,7 +14,7 @@ class ColourImageFactory extends Factory
     public function definition()
     {
         return [
-            'file_name' => $this->faker->word() . ".png",
+            'file_name' => $this->faker->unique()->word() . ".png",
             'main' => false
         ];
     }

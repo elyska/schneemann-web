@@ -17,6 +17,9 @@ Auth::routes(['verify' => true]);
 
 // General
 Route::get('/', [App\Http\Controllers\GeneralController::class, 'index']);
+Route::get('/products', [App\Http\Controllers\GeneralController::class, 'products']);
+Route::get('/products/{url}', [App\Http\Controllers\GeneralController::class, 'productDetail']);
+Route::get('/products/{url}/{colour}', [App\Http\Controllers\GeneralController::class, 'productDetailColour']);
 
 Route::post('/changeLanguage', [App\Http\Controllers\GeneralController::class, 'changeLanguage'])->name('changeLanguage');
 

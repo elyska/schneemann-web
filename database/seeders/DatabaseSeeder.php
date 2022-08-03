@@ -51,9 +51,13 @@ class DatabaseSeeder extends Seeder
             ->hasImages()->has($mainProductImage, "images") // each product colour has 2 images
             ->has($productColours, "colours"); // each product colour has 2 colours
 
+        $productsWithoutColour = Product::factory()->count(2)
+            ->hasImages()->has($mainProductImage, "images"); // each product colour has 2 images
+
         // 3 categories, each category has 3 products, 9 products in total
         Category::factory()->count(3)
             ->has($products)
+            ->has($productsWithoutColour)
             ->create();
     }
 }
