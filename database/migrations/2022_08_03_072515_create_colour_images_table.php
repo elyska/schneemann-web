@@ -15,7 +15,7 @@ class CreateColourImagesTable extends Migration
     {
         Schema::create('colour_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("colour_id");
+            $table->unsignedBigInteger("product_colour_id");
             $table->string('file_name', 255);
             $table->boolean("main")->default(false);
             $table->timestamps();
