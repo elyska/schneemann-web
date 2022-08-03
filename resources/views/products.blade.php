@@ -15,7 +15,7 @@
                 <td>Url</td>
                 <td>Image</td>
                 <td>Colour</td>
-                <td>Colour Image</td>
+                <td>Size</td>
             </tr>
             @foreach($products as $product)
                 <tr>
@@ -31,7 +31,7 @@
                         @if(count($product->colours) > 0) {{ $product->colours[0]->colour }} @endif
                     </td>
                     <td>
-                        @if(count($product->colours) > 0) {{ $product->colours[0]->images[0]->file_name }} @endif
+                        @if(count($product->colours) > 0 && count($product->colours[0]->sizes) > 0) size @endif
                     </td>
                 </tr>
             @endforeach

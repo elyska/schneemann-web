@@ -14,7 +14,7 @@ class ProductColourFactory extends Factory
     public function definition()
     {
         return [
-            'colour' => $this->faker->word(),
+            'colour' => $this->faker->unique()->word(),
             'stock_quantity' => $this->faker->randomNumber(2),
         ];
     }

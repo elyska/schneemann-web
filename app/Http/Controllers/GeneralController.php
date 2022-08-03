@@ -27,7 +27,6 @@ class GeneralController extends Controller
 
         //dd($products);
 
-
         return view('products',[
             "products" => $products
         ]);
@@ -35,31 +34,30 @@ class GeneralController extends Controller
 
     public function productDetail($url) {
 
-        //$products = Product::has('images')->get();
-
-        $product = Product::where("url", $url)->with(['images', 'colours.images' => function ($query) {
-            $query->where('main', true);
-        }, 'colours.sizes'])->get()[0];
+        $product = Product::where("url", $url)->with(['images'])->get()[0];
 
         return view('product-detail',[
             "product" => $product
         ]);
     }
+
     public function productDetailColour($url, $colour) {
 
-        //$products = Product::has('images')->get();
+        //$product = Product::where("url", $url)->with(['colours.images', 'colours.sizes'])->get()[0];
+
+        $product = Product::where("url", $url)->with(['colours' => function ($query) use ($colour) {
+            $query->where('colour', $colour);
+        }, 'colours.images', 'colours.sizes'])->get()[0];
 
 
-        $product = Product::where("url", $url)->with(['colours', 'colours.images', 'colours.sizes'])->get()[0];
-
-
-        //$otherColours = Product::where("url", $url)->with(['colours', 'colours.images'])->get();
-
-       // dd($product)   ;
+        $otherColours = Product::where("url", $url)->with(['colours.images' => function ($query) {
+            $query->where('main', true);
+        }])->get()[0];
 
         return view('product-detail',[
             "product" => $product,
-            "colour" => $colour
+            "colour" => $colour,
+            "otherColours" => $otherColours
         ]);
     }
 
@@ -68,5 +66,19 @@ class GeneralController extends Controller
         $language = $request->get('language');
         setcookie("language", $language, time() + (86400 * 30), "/"); // 86400 = 1 day
         return redirect()->back();
+    }
+
+    public function addToCart(Request $request) {
+        $id = $request->get("product-id");
+        $qty = $request->get("quantity");
+        $colour = $request->get("colour");
+        $size = $request->get("size");
+
+        $array = [$id, $qty, $colour, $size];
+        $cookie_value = json_encode($array);
+
+        setcookie("cart", $cookie_value, time() + (86400 * 30)); // 86400 = 1 day
+
+        return redirect()->back()->with("status", "Product was added to cart successfully.{$id} {$qty} {$colour} {$size}");
     }
 }

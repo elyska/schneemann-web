@@ -13,6 +13,7 @@ use App\Models\User;
 use Database\Factories\ColourImageFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class DatabaseSeeder extends Seeder
 {
@@ -42,7 +43,13 @@ class DatabaseSeeder extends Seeder
         $mainColourImage = ColourImage::factory()->state([
             'main' => true,
         ]);
-        $productColours = ProductColour::factory()->count(2)->hasSizes(2)->hasImages(2)->has($mainColourImage, "images");
+        $sizes = ProductSize::factory()->count(2)->state(new Sequence(
+            ['size' => 'S'],
+            ['size' => 'M'],
+            ['size' => 'L'],
+        ));
+        $productColours = ProductColour::factory()->count(2)->has($sizes, "sizes")->hasImages(2)->has($mainColourImage, "images");
+        $productColoursNoSize = ProductColour::factory()->count(2)->hasImages(2)->has($mainColourImage, "images");
 
         $mainProductImage = ProductImage::factory()->state([
             'main' => true,
@@ -51,12 +58,17 @@ class DatabaseSeeder extends Seeder
             ->hasImages()->has($mainProductImage, "images") // each product colour has 2 images
             ->has($productColours, "colours"); // each product colour has 2 colours
 
+        $productsNoSize = Product::factory()->count(1)
+            ->hasImages()->has($mainProductImage, "images") // each product colour has 2 images
+            ->has($productColoursNoSize, "colours"); // each product colour has 2 colours
+
         $productsWithoutColour = Product::factory()->count(2)
             ->hasImages()->has($mainProductImage, "images"); // each product colour has 2 images
 
         // 3 categories, each category has 3 products, 9 products in total
         Category::factory()->count(3)
             ->has($products)
+            ->has($productsNoSize)
             ->has($productsWithoutColour)
             ->create();
     }
