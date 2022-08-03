@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductVariant extends Model
+class ColourImage extends Model
 {
     use HasFactory;
+    public function colour()
+    {
+        return $this->belongsTo(ProductColour::class);
+    }
 }

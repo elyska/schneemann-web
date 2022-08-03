@@ -33,6 +33,8 @@ class CreateOrdersTable extends Migration
             $table->string("delivery",60);
             $table->string("payment",60);
             $table->string("currency",3);
+            $table->unsignedDecimal("total_eur", $precision = 6, $scale = 2);
+            $table->unsignedDecimal("total_czk", $precision = 7, $scale = 2);
             $table->unsignedDecimal("postage_eur", $precision = 5, $scale = 2);
             $table->unsignedDecimal("postage_czk", $precision = 6, $scale = 2);
             $table->timestamps();
