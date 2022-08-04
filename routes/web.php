@@ -20,6 +20,7 @@ Route::get('/', [App\Http\Controllers\GeneralController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\GeneralController::class, 'products'])->name('products');
 Route::get('/products/{url}', [App\Http\Controllers\GeneralController::class, 'productDetail']);
 Route::get('/products/{url}/{colour}', [App\Http\Controllers\GeneralController::class, 'productDetailColour']);
+Route::get('/cart', [App\Http\Controllers\GeneralController::class, 'cart'])->name('cart');
 
 Route::post('/changeLanguage', [App\Http\Controllers\GeneralController::class, 'changeLanguage'])->name('changeLanguage');
 Route::post('/add-to-cart', [App\Http\Controllers\GeneralController::class, 'addToCart']);

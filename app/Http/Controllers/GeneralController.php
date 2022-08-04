@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
+use stdClass;
 
 class GeneralController extends Controller
 {
@@ -68,17 +69,75 @@ class GeneralController extends Controller
         return redirect()->back();
     }
 
+
     public function addToCart(Request $request) {
+        // validate inputs
+        $request->validate([
+            "quantity" => 'min:1'
+        ]);
+
+        // get input values
         $id = $request->get("product-id");
-        $qty = $request->get("quantity");
+        $quantity = $request->get("quantity");
         $colour = $request->get("colour");
         $size = $request->get("size");
 
-        $array = [$id, $qty, $colour, $size];
-        $cookie_value = json_encode($array);
+        // create an object { productId: "", quantity: "", colour: "", size: "" }
+        $newItem = new stdClass();
+        $newItem->productId = $id;
+        $newItem->quantity = $quantity;
+        $newItem->colour = $colour;
+        $newItem->size = $size;
 
-        setcookie("cart", $cookie_value, time() + (86400 * 30)); // 86400 = 1 day
+        if($request->hasCookie('cartItems') == false) {
+            // if the cart was empty
 
-        return redirect()->back()->with("status", "Product was added to cart successfully.{$id} {$qty} {$colour} {$size}");
+            //$cookieValue = '[{"productName":"'. $productName .'","quantity":'. $quantity .'}]';
+            $cookieValue = json_encode(array($newItem));
+        }
+        else {
+            $cookie = $request->cookie('cartItems');
+            $cartItems = json_decode($cookie);
+
+            $recordExists = false;
+            foreach ($cartItems as $item) {
+                if ($item->productId == $id && $item->colour == $colour && $item->size == $size) {
+                    // if item exists, increase quantity
+                    $recordExists = true;
+                    $item->quantity = intval($item->quantity) + $quantity;
+                    break;
+                }
+            }
+            if (!$recordExists) {
+                // if item does not exist, add new item
+                array_push($cartItems, $newItem);
+            }
+            $cookieValue = json_encode($cartItems);
+        }
+        //dd($cookieValue);
+        // cookie expires in 1 month = 48800 minutes
+        Cookie::queue('cartItems', $cookieValue, 43800);
+
+        //return redirect()->back()->with("status", "Product was added to cart successfully.{$id} {$quantity} {$colour} {$size}");
+        return redirect("/cart");
+    }
+
+    public function cart(Request $request) {
+        // if there are items in the cart
+        if($request->hasCookie('cartItems')) {
+
+            // get cartItems cookie
+            $cookie = $request->cookie('cartItems');
+            $cookieObj = json_decode($cookie);
+
+            // get cartItems
+            $cartProducts = Product::getCartItems($cookieObj);
+        }
+        else {
+            $cartProducts = [];
+        }
+        return view('cart',[
+            "cartItems" => $cartProducts
+        ]);
     }
 }
