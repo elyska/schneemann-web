@@ -13,7 +13,7 @@
                 <tr>
                     <td>{{ $item->productId }}</td>
                     <td>{{ $item->title_cz }}</td>
-                    <td>{{ $item->title_cz }}</td>
+                    <td>{{ $item->image }}</td>
                     <td>{{ $item->quantity }} ks</td>
                     <td>{{ $item->price }} EUR</td>
                     <td>{{ $item->colour }}</td>

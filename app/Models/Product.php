@@ -22,22 +22,32 @@ class Product extends Model
     public function getCartItems($cartItems) {
         $productDetails = [];
         foreach ($cartItems as $item) {
-            //$newItem = new stdClass();
-            $newItem = self::where("id", $item->productId)->with(['images' => function ($query) {
+
+            $details = self::where("id", $item->productId)->with(['images' => function ($query) {
                 $query->where('main', true);
             }, 'colours' => function ($query) use ($item) {
                 $query->where('colour', $item->colour);
             }, 'colours.images' => function ($query) {
                 $query->where('main', true);
             }])->get()[0];
+
             // add cart quantity and size to product details
+            /*$newItem = new stdClass();
             $newItem->quantity = $item->quantity;
             $newItem->size = $item->size;
-            $newItem->colour = $item->colour;
+            $newItem->colour = $item->colour;*/
 
-            array_push($productDetails, $newItem);
+            $item->title_cz = $details->title_cz;
+            $item->price = $details->price;
+
+            // add correct image
+            if(count($details->colours) == 0) $item->image = $details->images[0]->file_name;
+            else $item->image = $details->colours[0]->images[0]->file_name;
+
+
+            //array_push($productDetails, $newItem);
         }
 
-        return $productDetails;
+        return $cartItems;
     }
 }

@@ -22,9 +22,9 @@ class ProductTest extends TestCase
         $item->size = "L";
 
         $productDetails = Product::getCartItems([$item])[0];
-        $this->assertTrue($productDetails->id == $item->productId);
-        $this->assertTrue($productDetails->colours[0]->colour == $item->colour);
-        $this->assertTrue($productDetails->colours[0]->images[0]->file_name == "dolores.png");
+        $this->assertTrue($productDetails->productId == $item->productId);
+        $this->assertTrue($productDetails->colour == $item->colour);
+        $this->assertTrue($productDetails->image == "dolores.png");
         $this->assertTrue($productDetails->quantity == $item->quantity);
         $this->assertTrue($productDetails->size == $item->size);
 
@@ -44,16 +44,16 @@ class ProductTest extends TestCase
         $item2->size = "S";
 
         $productDetails = Product::getCartItems([$item, $item2])[0];
-        $this->assertTrue($productDetails->id == $item->productId);
-        $this->assertTrue($productDetails->colours[0]->colour == $item->colour);
-        $this->assertTrue($productDetails->colours[0]->images[0]->file_name == "dolores.png");
+        $this->assertTrue($productDetails->productId == $item->productId);
+        $this->assertTrue($productDetails->colour == $item->colour);
+        $this->assertTrue($productDetails->image == "dolores.png");
         $this->assertTrue($productDetails->quantity == $item->quantity);
         $this->assertTrue($productDetails->size == $item->size);
 
         $productDetails = Product::getCartItems([$item, $item2])[1];
-        $this->assertTrue($productDetails->id == $item2->productId);
-        $this->assertTrue($productDetails->colours[0]->colour == $item2->colour);
-        $this->assertTrue($productDetails->colours[0]->images[0]->file_name == "nemo.png");
+        $this->assertTrue($productDetails->productId == $item2->productId);
+        $this->assertTrue($productDetails->colour == $item2->colour);
+        $this->assertTrue($productDetails->image == "nemo.png");
         $this->assertTrue($productDetails->quantity == $item2->quantity);
         $this->assertTrue($productDetails->size == $item2->size);
     }
@@ -66,9 +66,9 @@ class ProductTest extends TestCase
         $item->size = null;
 
         $productDetails = Product::getCartItems([$item])[0];
-        $this->assertTrue($productDetails->id == $item->productId);
+        $this->assertTrue($productDetails->productId == $item->productId);
         $this->assertTrue($productDetails->colour == $item->colour);
-        $this->assertTrue($productDetails->colours[0]->images[0]->file_name == "earum.png");
+        $this->assertTrue($productDetails->image == "earum.png");
         $this->assertTrue($productDetails->quantity == $item->quantity);
         $this->assertTrue($productDetails->size == $item->size);
     }
@@ -81,8 +81,7 @@ class ProductTest extends TestCase
         $item->size = null;
 
         $productDetails = Product::getCartItems([$item])[0];
-        $this->assertTrue($productDetails->id == $item->productId);
-        $this->assertTrue(count($productDetails->colours) == 0);
+        $this->assertTrue($productDetails->productId == $item->productId);
         $this->assertTrue($productDetails->colour == $item->colour);
         $this->assertTrue($productDetails->quantity == $item->quantity);
         $this->assertTrue($productDetails->size == $item->size);
