@@ -39,6 +39,7 @@ class Product extends Model
 
             $item->title_cz = $details->title_cz;
             $item->price = $details->price;
+            $item->url = $details->url;
 
             // add correct image
             if(count($details->colours) == 0) $item->image = $details->images[0]->file_name;

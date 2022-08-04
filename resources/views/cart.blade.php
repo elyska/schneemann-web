@@ -12,7 +12,7 @@
             @foreach($cartItems as $item)
                 <tr>
                     <td>{{ $item->productId }}</td>
-                    <td>{{ $item->title_cz }}</td>
+                    <td><a href="/products/{{ $item->url }}/{{ $item->colour }}">{{ $item->title_cz }}</a></td>
                     <td>{{ $item->image }}</td>
                     <td>{{ $item->quantity }} ks</td>
                     <td>{{ $item->price }} EUR</td>
