@@ -122,6 +122,31 @@ class GeneralController extends Controller
         return redirect("/cart");
     }
 
+    public function removeFromCart(Request $request) {
+        // get input values
+        $productId = $request->get("productId");
+        $colour = $request->get("colour");
+        $size = $request->get("size");
+
+        // get cart items from cookies
+        $cookie = $request->cookie('cartItems');
+        $cartItems = json_decode($cookie);
+
+
+        // remove the product
+        $newCartItems = [];
+        foreach ($cartItems as $item) {
+            if (!($item->productId == $productId && $item->colour == $colour && $item->size == $size)) {
+                array_push($newCartItems, $item);
+            }
+        }
+
+        $cookieValue = json_encode($newCartItems);
+        // cookie expires in 1 month = 48800 minutes
+        Cookie::queue('cartItems', $cookieValue, 43800);
+
+        return redirect()->back();
+    }
     public function cart(Request $request) {
         // if there are items in the cart
         if($request->hasCookie('cartItems')) {
