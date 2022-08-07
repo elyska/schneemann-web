@@ -147,6 +147,38 @@ class GeneralController extends Controller
 
         return redirect()->back();
     }
+
+    public function changeQuantity(Request $request) {
+        // validate inputs
+        $request->validate([
+            "quantity" => 'min:1'
+        ]);
+
+        // get input values
+        $id = $request->get("productId");
+        $colour = $request->get("colour");
+        $size = $request->get("size");
+        $quantity = $request->get("quantity");
+
+        // get cart items from cookies
+        $cookie = $request->cookie('cartItems');
+        $cartItems = json_decode($cookie);
+
+        // update quantity
+        foreach ($cartItems as $item) {
+            if ($item->productId == $id && $item->colour == $colour && $item->size == $size)  {
+                // change quantity
+                $item->quantity = $quantity;
+                break;
+            }
+        }
+
+        // save updates to cookies
+        $cookieValue = json_encode($cartItems);
+        // cookie expires in 1 month = 48800 minutes
+        Cookie::queue('cartItems', $cookieValue, 43800);
+    }
+
     public function cart(Request $request) {
         // if there are items in the cart
         if($request->hasCookie('cartItems')) {

@@ -25,6 +25,7 @@ Route::get('/cart', [App\Http\Controllers\GeneralController::class, 'cart'])->na
 Route::post('/changeLanguage', [App\Http\Controllers\GeneralController::class, 'changeLanguage'])->name('changeLanguage');
 Route::post('/add-to-cart', [App\Http\Controllers\GeneralController::class, 'addToCart']);
 Route::post('/remove-from-cart', [App\Http\Controllers\GeneralController::class, 'removeFromCart']);
+Route::post('/change-quantity', [App\Http\Controllers\GeneralController::class, 'changeQuantity']);
 
 // Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['twofactor']);

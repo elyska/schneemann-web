@@ -20,6 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link href="/style/language-change.css" type="text/css" rel="stylesheet" />
+    <link href="/style/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div id="app">
@@ -113,5 +114,6 @@
 
 
     <script type="module" src="/script/language-change.js"></script>
+    @yield('script')
 </body>
 </html>
