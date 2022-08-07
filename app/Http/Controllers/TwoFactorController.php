@@ -22,7 +22,7 @@ class TwoFactorController extends Controller
             // if the user needs two-factor authentication
             if (count($expiration) != 0) return view('auth.two-factor');
         }
-        return redirect()->route('login');
+        return redirect()->back();
     }
 
     public function sendCode() {

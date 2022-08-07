@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,10 @@ Route::post('/remove-from-cart', [App\Http\Controllers\GeneralController::class,
 Route::post('/change-quantity', [App\Http\Controllers\GeneralController::class, 'changeQuantity']);
 
 // Home
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['twofactor']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Admin
+Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
 
 // TwoFactor
 Route::get('/two-factor', [App\Http\Controllers\TwoFactorController::class, 'index'])->name('verify.index');

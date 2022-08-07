@@ -27,7 +27,11 @@ class DatabaseSeeder extends Seeder
         User::truncate();
 
         User::factory()->create([
-            "email" => "eliskaryklova@gmail.com"
+            "email" => "eliskaryklova@gmail.com",
+            "role" => "admin"
+        ]);
+        User::factory()->create([
+            "email" => "eryklova@gmail.com"
         ]);
 
         Category::truncate();

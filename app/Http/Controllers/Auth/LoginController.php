@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
 use NextApps\VerificationCode\VerificationCode;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,6 +45,7 @@ class LoginController extends Controller
     {
         // if the user verified the account on this device before, do not require a code again
         if(!isset($_COOKIE['trusted-device']) || !in_array($user->email, json_decode($request->cookie('trusted-device')))) { //|| in_array(json_decode($request->cookie('trusted-device')), $user->email)
+            // send verification code
             VerificationCode::send($user->email);
         }/*
         else {
