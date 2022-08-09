@@ -22,11 +22,13 @@ Route::get('/products', [App\Http\Controllers\GeneralController::class, 'product
 Route::get('/products/{url}', [App\Http\Controllers\GeneralController::class, 'productDetail']);
 Route::get('/products/{url}/{colour}', [App\Http\Controllers\GeneralController::class, 'productDetailColour']);
 Route::get('/cart', [App\Http\Controllers\GeneralController::class, 'cart'])->name('cart');
+Route::get('/delivery-payment-selection', [App\Http\Controllers\OrderController::class, 'deliveryPayment'])->name('deliveryPayment');
 
 Route::post('/changeLanguage', [App\Http\Controllers\GeneralController::class, 'changeLanguage'])->name('changeLanguage');
 Route::post('/add-to-cart', [App\Http\Controllers\GeneralController::class, 'addToCart']);
 Route::post('/remove-from-cart', [App\Http\Controllers\GeneralController::class, 'removeFromCart']);
 Route::post('/change-quantity', [App\Http\Controllers\GeneralController::class, 'changeQuantity']);
+Route::post('/select-destination', [App\Http\Controllers\OrderController::class, 'selectDestination']);
 
 // Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

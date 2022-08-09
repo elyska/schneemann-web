@@ -30,13 +30,14 @@ class CreateOrdersTable extends Migration
             $table->string("bil_country",60);
             $table->string("phone",20);
             $table->string("email",60);
-            $table->string("delivery",60);
+            $table->string("delivery",60)->nullable();
             $table->string("payment",60);
             $table->string("currency",3);
-            $table->unsignedDecimal("total_eur", $precision = 6, $scale = 2);
-            $table->unsignedDecimal("total_czk", $precision = 7, $scale = 2);
-            $table->unsignedDecimal("postage_eur", $precision = 5, $scale = 2);
-            $table->unsignedDecimal("postage_czk", $precision = 6, $scale = 2);
+            $table->string("status",10)->default("Nová");
+            $table->unsignedDecimal("total_eur", $precision = 6, $scale = 2)->nullable();
+            $table->unsignedDecimal("total_czk", $precision = 7, $scale = 2)->nullable();
+            $table->unsignedDecimal("postage_eur", $precision = 5, $scale = 2)->nullable();
+            $table->unsignedDecimal("postage_czk", $precision = 6, $scale = 2)->nullable();
             $table->timestamps();
         });
     }

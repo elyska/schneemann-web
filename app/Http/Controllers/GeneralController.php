@@ -70,6 +70,25 @@ class GeneralController extends Controller
     }
 
 
+    public function cart(Request $request) {
+        // if there are items in the cart
+        if($request->hasCookie('cartItems')) {
+
+            // get cartItems cookie
+            $cookie = $request->cookie('cartItems');
+            $cookieObj = json_decode($cookie);
+
+            // get cartItems
+            $cartProducts = Product::getCartItems($cookieObj);
+        }
+        else {
+            $cartProducts = [];
+        }
+        return view('cart',[
+            "cartItems" => $cartProducts
+        ]);
+    }
+
     public function addToCart(Request $request) {
         // validate inputs
         $request->validate([
@@ -177,24 +196,5 @@ class GeneralController extends Controller
         $cookieValue = json_encode($cartItems);
         // cookie expires in 1 month = 48800 minutes
         Cookie::queue('cartItems', $cookieValue, 43800);
-    }
-
-    public function cart(Request $request) {
-        // if there are items in the cart
-        if($request->hasCookie('cartItems')) {
-
-            // get cartItems cookie
-            $cookie = $request->cookie('cartItems');
-            $cookieObj = json_decode($cookie);
-
-            // get cartItems
-            $cartProducts = Product::getCartItems($cookieObj);
-        }
-        else {
-            $cartProducts = [];
-        }
-        return view('cart',[
-            "cartItems" => $cartProducts
-        ]);
     }
 }

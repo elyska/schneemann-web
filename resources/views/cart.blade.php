@@ -9,6 +9,8 @@
     <main>
         <h1>Cart</h1>
 
+        <a href="/products">Continue shopping</a>
+
         @if(count($cartItems) == 0)
             <p>Cart is empty.</p>
             <p><a href="/products">Continue shopping</a></p>
@@ -29,7 +31,8 @@
                                 <input type="number" name="quantity" min="1" value="{{ $item->quantity }}">
                             </form>
                         </td>
-                        <td>{{ $item->price }} EUR</td>
+                        <td class="product-price">{{ $item->price }} EUR</td>
+                        <td><span class="product-total">{{ $item->price * $item->quantity }}</span> EUR</td>
                         <td>{{ $item->colour }}</td>
                         <td>{{ $item->size }}</td>
                         <td>
@@ -44,6 +47,9 @@
                     </tr>
                 @endforeach
             </table>
+
+            <a href="{{ route('deliveryPayment') }}">Continue</a>
+
         @endif
 
     </main>

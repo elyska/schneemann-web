@@ -8,7 +8,7 @@
     <div class="container">
         {{ $product->id }}
         <h1>{{ $product->title_cz }}</h1>
-        {{-- ******************************************************* --}}
+        {{-- ********* Product does not have colour variants ******* --}}
         @if(count($product->colours) == 0)
             Product images
             <ul>
@@ -17,7 +17,7 @@
                 @endforeach
             </ul>
 
-        {{-- ******************************************************* --}}
+        {{-- ************** Product has colour variants ************ --}}
         @else
             Colour Images
             <ul>
@@ -26,6 +26,7 @@
                 @endforeach
             </ul>
 
+            {{-- Product has sizes --}}
             @if(count($product->colours[0]->sizes) > 0)
                 Sizes
                 <ul>

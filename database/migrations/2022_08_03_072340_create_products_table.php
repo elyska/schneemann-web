@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('title_en', 100);
             $table->string('url', 100);
             $table->unsignedDecimal("price", $precision = 6, $scale = 2);
+            $table->unsignedDecimal("weight", $precision = 4, $scale = 2);
             $table->text("description_cz");
             $table->text("description_en");
             $table->smallInteger("stock_quantity")->nullable();

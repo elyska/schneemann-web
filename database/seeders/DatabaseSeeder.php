@@ -9,9 +9,11 @@ use App\Models\Product;
 use App\Models\ProductColour;
 use App\Models\ProductImage;
 use App\Models\ProductSize;
+use App\Models\ShippingPrice;
 use App\Models\User;
 use Database\Factories\ColourImageFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
@@ -24,6 +26,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /* Users */
         User::truncate();
 
         User::factory()->create([
@@ -34,6 +37,7 @@ class DatabaseSeeder extends Seeder
             "email" => "eryklova@gmail.com"
         ]);
 
+        /* Products and Categories */
         Category::truncate();
         CategoryItem::truncate();
         Product::truncate();
@@ -75,5 +79,11 @@ class DatabaseSeeder extends Seeder
             ->has($productsNoSize)
             ->has($productsWithoutColour)
             ->create();
+
+        /* Shipping */
+        ShippingPrice::truncate();
+
+        $sql = file_get_contents('insert.sql');
+        DB::unprepared($sql);
     }
 }

@@ -18,6 +18,7 @@ class ProductFactory extends Factory
             'title_en' => $this->faker->name(),
             'url' => $this->faker->unique()->word(),
             'price' => $this->faker->randomFloat(2, 1, 1000),
+            'weight' => $this->faker->randomFloat(2, 0.1, 1),
             'description_cz' => $this->faker->text(),
             'description_en' => $this->faker->text(),
             'stock_quantity' => $this->faker->randomNumber(2),

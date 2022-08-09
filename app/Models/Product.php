@@ -40,6 +40,7 @@ class Product extends Model
             $item->title_cz = $details->title_cz;
             $item->price = $details->price;
             $item->url = $details->url;
+            $item->weight = $details->weight;
 
             // add correct image
             if(count($details->colours) == 0) $item->image = $details->images[0]->file_name;
@@ -50,5 +51,13 @@ class Product extends Model
         }
 
         return $cartItems;
+    }
+
+    public function getSubtotal($cartItems) {
+        $subtotal = 0;
+        foreach ($cartItems as $item) {
+            $subtotal += $item->quantity * $item->price;
+        }
+        return $subtotal;
     }
 }
