@@ -83,4 +83,17 @@ class OrderController extends Controller
         //return redirect()->back();
 
     }
+
+    public function contactDetailsPage(Request $request) {
+
+        // if the destination is not set, return to the delivery summary page
+        if(!$request->hasCookie('destination')) return redirect("/delivery-payment-selection")->with('status', 'Select destination');
+
+        // get the destination from cookies
+        $destination = $request->cookie('destination');
+
+        return view('contact-form',[
+            "destination" => $destination
+        ]);
+    }
 }

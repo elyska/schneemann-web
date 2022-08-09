@@ -7,9 +7,9 @@
 @section('content')
 
     <main>
-        <h1>Cart</h1>
-
         <a href="/products">Continue shopping</a>
+
+        <h1>Cart</h1>
 
         @if(count($cartItems) == 0)
             <p>Cart is empty.</p>

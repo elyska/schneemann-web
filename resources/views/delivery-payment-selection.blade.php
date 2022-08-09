@@ -15,13 +15,18 @@
             @csrf
 
             <select name="destination" required>
-                <option value="" disabled {{Request::cookie('destination') == false ? 'selected':''}} hidden>Vyberte cílovou destinaci</option>
+                <option value="" disabled {{Request::cookie('destination') == false ? 'selected':''}} hidden>Select destination</option>
 
                 @foreach($countries as $country)
                     <option value="{{$country->country}}" {{Request::cookie('destination') == $country->country ? 'selected':''}}>{{$country->country}}</option>
                 @endforeach
             </select>
 
+            @if (session('status'))
+                <div class="alert alert-danger">
+                    {{ session('status') }}
+                </div>
+            @endif
         </form>
 
         <br />
@@ -30,7 +35,7 @@
         <form action="/select-payment" method="post">
             @csrf
 
-            <input type="radio" name="payment" id="card" value="card">
+            <input type="radio" name="payment" id="card" value="card" checked>
             <label for="card">Card</label><br>
             <input type="radio" name="payment" id="transfer" value="transfer">
             <label for="transfer">Bank transfer</label><br>
@@ -41,6 +46,8 @@
         <section id="order-summary">
             @include("layouts.partials.order-summary")
         </section>
+
+        <a href="/contact-details">Continue</a>
     </main>
 
 @endsection
