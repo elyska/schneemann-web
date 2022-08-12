@@ -2,11 +2,11 @@
 /* delivery-payment-selection.js */
 
 const country = document.querySelector('form[action="/select-destination"] select')
+const paymentInputs = document.querySelectorAll('form[action="/select-destination"] input[type="radio"]')
 const destinationForm = document.querySelector("main form[action='/select-destination']")
 const orderSummary = document.querySelector("#order-summary")
 
-// update postage
-country.addEventListener("change", () => {
+function httpRequest() {
     // bind the FormData object and the form element
     const formData = new FormData( destinationForm )
 
@@ -26,4 +26,13 @@ country.addEventListener("change", () => {
 
     // sent data provided in the form
     xhr.send( formData )
+}
+// update postage, payment
+country.addEventListener("change", () => {
+    httpRequest()
 })
+for(const payment of paymentInputs) {
+    payment.addEventListener("change", () => {
+        httpRequest()
+    })
+}

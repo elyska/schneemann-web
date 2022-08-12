@@ -15,29 +15,29 @@
             @csrf
 
             <select name="destination" required>
-                <option value="" disabled {{Request::cookie('destination') == false ? 'selected':''}} hidden>Select destination</option>
+                <option value="" disabled {{Request::cookie('destination') == false ? 'selected':''}} hidden>
+                    Select destination
+                </option>
 
                 @foreach($countries as $country)
-                    <option value="{{$country->country}}" {{Request::cookie('destination') == $country->country ? 'selected':''}}>{{$country->country}}</option>
+                    <option value="{{$country->country}}" {{Request::cookie('destination') == $country->country ? 'selected':''}}>
+                        {{$country->country}}
+                    </option>
                 @endforeach
             </select>
 
             @if (session('status'))
-                <div class="alert alert-danger">
-                    {{ session('status') }}
-                </div>
+                <div class="alert alert-danger">{{ session('status') }}</div>
             @endif
-        </form>
 
-        <br />
+            <br />
+            <br />
+            <h2>Payment</h2>
 
-        <h2>Payment</h2>
-        <form action="/select-payment" method="post">
-            @csrf
-
-            <input type="radio" name="payment" id="card" value="card" checked>
+            <input type="radio" name="payment" id="card" value="card" {{ Request::cookie('payment') == "transfer" ? '' : 'checked' }}>
             <label for="card">Card</label><br>
-            <input type="radio" name="payment" id="transfer" value="transfer">
+            <input type="radio" name="payment" id="transfer" value="transfer"
+                   {{ Request::cookie('payment') == "transfer" ? 'checked' : '' }}>
             <label for="transfer">Bank transfer</label><br>
         </form>
 

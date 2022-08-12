@@ -8,7 +8,7 @@ const billingCity = document.querySelector('main form fieldset:last-of-type inpu
 const billingPcd = document.querySelector('main form fieldset:last-of-type input[name="bilPostcode"]')
 const billingCountry = document.querySelector('main form fieldset:last-of-type input[name="bilCountry"]')
 
-// hide billing details fieldset
+// hide/show billing details fieldset
 if (billingCheckbox.checked) {
     billingFieldset.style.display = "none"
 }

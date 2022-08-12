@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cookie;
 
 class OrderController extends Controller
 {
-    public function deliveryPayment(Request $request) {
+    public function deliveryPaymentPage(Request $request) {
         // get countries for selection
         $countries = ShippingPrice::getCountries();
 
@@ -46,21 +46,27 @@ class OrderController extends Controller
     }
 
     public function selectDestination(Request $request) {
-
-        // save destination to cookies
-        $destination = $request->get("destination");
-
-        // cookie expires in 1 month = 48800 minutes
-        Cookie::queue('destination', $destination, 43800);
+        // save payment selection to cookies
+        $payment = $request->get("payment");
+        Cookie::queue('payment', $payment, 43800);
 
         // get cartItems
         $cookie = $request->cookie('cartItems');
         $cookieObj = json_decode($cookie);
         $cartProducts = Product::getCartItems($cookieObj);
 
-        // get shipping price in CZK
-        $postageCZK = ShippingPrice::getPrice($destination, $cartProducts);
-        $postageEUR = $postageCZK / 25;
+        // set postage to null
+        $postageCZK = null;
+        $postageEUR = null;
+
+        // save destination to cookies if destination was selected
+        $destination = $request->get("destination");
+        if($destination) {
+            Cookie::queue('destination', $destination, 43800);
+            // get shipping price in CZK
+            $postageCZK = ShippingPrice::getPrice($destination, $cartProducts);
+            $postageEUR = $postageCZK / 25;
+        }
 
         // get subtotal in EUR
         $subtotalEUR = Product::getSubtotal($cartProducts);
@@ -71,16 +77,6 @@ class OrderController extends Controller
             "postageCZK" => $postageCZK,
             "subtotalEUR" => $subtotalEUR
         ]);
-/*
-        if($request->ajax()) {
-            return view("layouts.partials.order-summary", [
-                "cartItems" => $cartProducts,
-                "postageEUR" => $postageEUR,
-                "postageCZK" => $postageCZK,
-                "subtotalEUR" => $subtotalEUR
-            ]);
-        }*/
-        //return redirect()->back();
 
     }
 

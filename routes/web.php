@@ -22,7 +22,7 @@ Route::get('/products', [App\Http\Controllers\GeneralController::class, 'product
 Route::get('/products/{url}', [App\Http\Controllers\GeneralController::class, 'productDetail']);
 Route::get('/products/{url}/{colour}', [App\Http\Controllers\GeneralController::class, 'productDetailColour']);
 Route::get('/cart', [App\Http\Controllers\GeneralController::class, 'cart'])->name('cart');
-Route::get('/delivery-payment-selection', [App\Http\Controllers\OrderController::class, 'deliveryPayment'])->name('deliveryPayment');
+Route::get('/delivery-payment-selection', [App\Http\Controllers\OrderController::class, 'deliveryPaymentPage'])->name('deliveryPayment');
 Route::get('/contact-details', [App\Http\Controllers\OrderController::class, 'contactDetailsPage']);
 
 Route::post('/changeLanguage', [App\Http\Controllers\GeneralController::class, 'changeLanguage'])->name('changeLanguage');
