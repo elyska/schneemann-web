@@ -95,5 +95,22 @@ class Order extends Model
                 "updated_at"=> Carbon::now()
             ]);
         }
+
+        $insertProducts = [];
+        foreach ($products as $product) {
+            array_push($insertProducts, [
+                "order_id" => $orderId,
+                "product_id" => $product->productId,
+                "quantity" => $product->quantity,
+                "colour" => $product->colour,
+                "size" => $product->size,
+                "file_name" => $product->image,
+                "total_eur" => $product->price * $product->quantity,
+                "total_czk" => CurrencyConversion::EURtoCZK($product->price) * $product->quantity,
+                "created_at"=> Carbon::now(),
+                "updated_at"=> Carbon::now()
+            ]);
+        }
+        OrderItem::insert($insertProducts);
     }
 }
