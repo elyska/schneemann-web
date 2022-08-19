@@ -10,7 +10,7 @@
         <article>
             <a href="/products">Continue Shopping</a>
 
-            <form action="/delivery-form" method="POST">
+            <form action="/contact-form" method="POST">
                 @csrf
                 <fieldset>
 
@@ -18,7 +18,7 @@
 
                     <p>
                         <label for="name">Name *</label><br />
-                        <input type="text" name="name" maxlength="100" required />
+                        <input type="text" name="name" maxlength="255" required />
                     </p>
 
                     <p>
@@ -57,11 +57,7 @@
 
                     <p>
                         <label for="delCountry">Country *</label><br />
-                        @if($destination != "other")
-                            <input type="text" name="delCountry" value="{{$destination}}" required readonly />
-                        @else
-                            <input type="text" name="delCountry" required maxlength="60" />
-                        @endif
+                        <input name="delCountry" value="{{$destination}}" readonly />
                     </p>
 
                 </fieldset>

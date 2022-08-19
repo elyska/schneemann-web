@@ -35,12 +35,13 @@ class ShippingPrice extends Model
         return $price;
     }
 
+
     public function getPrice($destination, $products) {
         // calculate total weight
         $contentWeight = self::getWeight($products);
 
         $price = self::priceFromWeight($destination, $contentWeight);
 
-        return $price;
+        return $price; // returns price in CZK
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Classes\CurrencyConversion;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,5 +13,87 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function insertOrder($request) {
+        // get destination
+        $destination = $request->cookie('destination');
+
+        // get payment
+        $payment = $request->cookie('payment');
+
+        // get currency
+        $language = $_COOKIE['language'];
+        if ($language == "cs") $currency = "CZK";
+        else $currency = "EUR";
+
+        // get cartItems
+        $cookieObj = json_decode($request->cookie('cartItems'));
+        $products = Product::getCartItems($cookieObj);
+
+        // get shipping price
+        $postageCZK = ShippingPrice::getPrice($destination, $products);
+        $postageEUR = CurrencyConversion::CZKtoEUR($postageCZK);
+
+        // get total price
+        $subtotalEUR = Product::getSubtotal($products);
+        $subtotalCZK = CurrencyConversion::EURtoCZK($subtotalEUR);
+
+        $sameBilAddress = $request->get("sameBilAddress");
+
+        if ($sameBilAddress) {
+            $orderId = self::insertGetId([
+                "name" => $request->get("name"),
+                "del_address_line_1" => $request->get("delAddressLine1"),
+                "del_address_line_2" => $request->get("delAddressLine2"),
+                "del_address_line_3" => $request->get("delAddressLine3"),
+                "del_city" => $request->get("delCity"),
+                "del_postcode" => $request->get("delPostcode"),
+                "del_country" => $destination,
+                "bil_address_line_1" => $request->get("delAddressLine1"),
+                "bil_address_line_2" => $request->get("delAddressLine2"),
+                "bil_address_line_3" => $request->get("delAddressLine3"),
+                "bil_postcode" => $request->get("delPostcode"),
+                "bil_city" => $request->get("delCity"),
+                "bil_country" => $destination,
+                "phone" => $request->get("phone"),
+                "email" => $request->get("email"),
+                "payment" => $payment,
+                "currency" => $currency,
+                "subtotal_czk" => $subtotalCZK,
+                "subtotal_eur" => $subtotalEUR,
+                "postage_eur" => $postageEUR,
+                "postage_czk" => $postageCZK,
+                "created_at"=> Carbon::now(),
+                "updated_at"=> Carbon::now()
+            ]);
+        }
+        else {
+            $orderId = self::insertGetId([
+                "name" => $request->get("name"),
+                "del_address_line_1" => $request->get("delAddressLine1"),
+                "del_address_line_2" => $request->get("delAddressLine2"),
+                "del_address_line_3" => $request->get("delAddressLine3"),
+                "del_city" => $request->get("delCity"),
+                "del_postcode" => $request->get("delPostcode"),
+                "del_country" => $destination,
+                "bil_address_line_1" => $request->get("bilAddressLine1"),
+                "bil_address_line_2" => $request->get("bilAddressLine2"),
+                "bil_address_line_3" => $request->get("bilAddressLine3"),
+                "bil_postcode" => $request->get("bilPostcode"),
+                "bil_city" => $request->get("bilCity"),
+                "bil_country" => $request->get("bilCountry"),
+                "phone" => $request->get("phone"),
+                "email" => $request->get("email"),
+                "payment" => $payment,
+                "currency" => $currency,
+                "subtotal_czk" => $subtotalCZK,
+                "subtotal_eur" => $subtotalEUR,
+                "postage_eur" => $postageEUR,
+                "postage_czk" => $postageCZK,
+                "created_at"=> Carbon::now(),
+                "updated_at"=> Carbon::now()
+            ]);
+        }
     }
 }

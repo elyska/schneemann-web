@@ -13,7 +13,6 @@
 
         @if(count($cartItems) == 0)
             <p>Cart is empty.</p>
-            <p><a href="/products">Continue shopping</a></p>
         @else
             <table class="table">
                 @foreach($cartItems as $item)
