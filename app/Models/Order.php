@@ -15,7 +15,7 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function insertOrder($request, $destination, $products,$subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR) {
+    public function insertOrder($request, $destination, $products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR) {
 
         // get payment
         $payment = $request->cookie('payment');

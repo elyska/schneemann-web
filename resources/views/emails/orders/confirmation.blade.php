@@ -1,6 +1,6 @@
 
 <p>
-    Dear Customer,
+    {{  __("Dear Customer") }},
 
     <br />
     <br />
