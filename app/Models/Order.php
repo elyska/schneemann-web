@@ -15,9 +15,7 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function insertOrder($request) {
-        // get destination
-        $destination = $request->cookie('destination');
+    public function insertOrder($request, $destination, $products,$subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR) {
 
         // get payment
         $payment = $request->cookie('payment');
@@ -27,17 +25,6 @@ class Order extends Model
         if ($language == "cs") $currency = "CZK";
         else $currency = "EUR";
 
-        // get cartItems
-        $cookieObj = json_decode($request->cookie('cartItems'));
-        $products = Product::getCartItems($cookieObj);
-
-        // get shipping price
-        $postageCZK = ShippingPrice::getPrice($destination, $products);
-        $postageEUR = CurrencyConversion::CZKtoEUR($postageCZK);
-
-        // get total price
-        $subtotalEUR = Product::getSubtotal($products);
-        $subtotalCZK = CurrencyConversion::EURtoCZK($subtotalEUR);
 
         $sameBilAddress = $request->get("sameBilAddress");
 

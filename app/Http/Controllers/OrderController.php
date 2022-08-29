@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Classes\Cart;
 use App\Classes\CurrencyConversion;
+use App\Mail\OrderConfirmation;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ShippingPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -120,10 +122,27 @@ class OrderController extends Controller
             "agreement" => 'required'
         ]);
 
+        // get destination
+        $destination = $request->cookie('destination');
+
+        // get cartItems
+        $cookieObj = json_decode($request->cookie('cartItems'));
+        $products = Product::getCartItems($cookieObj);
+
+        // get shipping price
+        $postageCZK = ShippingPrice::getPrice($destination, $products);
+        $postageEUR = CurrencyConversion::CZKtoEUR($postageCZK);
+
+        // get total price
+        $subtotalEUR = Product::getSubtotal($products);
+        $subtotalCZK = CurrencyConversion::EURtoCZK($subtotalEUR);
+
         // save order details and order items
-        Order::insertOrder($request);
+        Order::insertOrder($request, $destination, $products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR);
 
         // send emails
+        $email = $request->get("email");
+        Mail::to($email)->send(new OrderConfirmation($products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR));
 
         // set orderSent cookie
         Cookie::queue('order-success', true, 43800);

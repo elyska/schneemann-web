@@ -38,6 +38,7 @@ class Product extends Model
             $newItem->colour = $item->colour;*/
 
             $item->title_cz = $details->title_cz;
+            $item->title_en = $details->title_en;
             $item->price = $details->price;
             $item->url = $details->url;
             $item->weight = $details->weight;
