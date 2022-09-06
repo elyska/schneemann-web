@@ -1,10 +1,24 @@
 
 <p>
-    {{  __("Dear Customer") }},
+    {{  __("Dear customer") }},
 
     <br />
     <br />
-    thank you for your order. You can find the order details below.
+    {{  __("thank you for your order") }}. <br />
+    @if($bankTransfer)
+
+    {{  __("Here are the payment details for your order") }}: <br />
+    {{  __("Account number") }}: xxxx-xxxxxxxxxx/xxxx <br />
+    {{  __("Amount") }}:
+        {{-- Show currency according to the language --}}
+        @if(App::isLocale('cs'))
+            {{ $subtotalCZK + $postageCZK }} CZK
+        @else
+            {{ $subtotalEUR + $postageEUR }} EUR
+        @endif <br />
+
+    @endif
+    {{  __("You can find the order details below") }}.
 </p>
 
 <h1>Your Order</h1>
@@ -12,7 +26,13 @@
 @foreach($products as $product)
     <tr>
         <td style="border-top: 1px solid #edeff2">
-            {{ $product->title_cz }} @if($product->colour) <br /> @endif
+            {{-- Show title according to the language --}}
+            @if(App::isLocale('cs'))
+                {{ $product->title_cz }}
+            @else
+                {{ $product->title_en }}
+            @endif
+            @if($product->colour) <br /> @endif
             {{ $product->colour }} @if($product->size) <br /> @endif
             {{ $product->size }} <br />
         </td>
@@ -20,7 +40,12 @@
             {{ $product->quantity }} ks
         </td>
         <td style="border-top: 1px solid #edeff2">
+        {{-- Show currency according to the language --}}
+        @if(App::isLocale('cs'))
+            {{ App\Classes\CurrencyConversion::EURtoCZK($product->price) * $product->quantity }} CZK
+        @else
             {{ $product->price * $product->quantity }} EUR
+        @endif
         </td>
     </tr>
 @endforeach
@@ -29,7 +54,12 @@
             Subtotal
         </td>
         <td style="border-top: 1px solid #edeff2">
-            {{ $subtotalEUR }} EUR
+            {{-- Show currency according to the language --}}
+            @if(App::isLocale('cs'))
+                {{ $subtotalCZK}} CZK
+            @else
+                {{ $subtotalEUR }} EUR
+            @endif
         </td>
     </tr>
     <tr>
@@ -37,7 +67,12 @@
             Shipping
         </td>
         <td>
-            {{ $postageEUR }} EUR
+            {{-- Show currency according to the language --}}
+            @if(App::isLocale('cs'))
+                {{ $postageCZK }} CZK
+            @else
+                {{ $postageEUR }} EUR
+            @endif
         </td>
     </tr>
     <tr>
@@ -45,7 +80,13 @@
             Total
         </td>
         <td>
-            {{ $subtotalEUR + $postageEUR }} EUR
+
+            {{-- Show currency according to the language --}}
+            @if(App::isLocale('cs'))
+                {{ $subtotalCZK + $postageCZK }} CZK
+            @else
+                {{ $subtotalEUR + $postageEUR }} EUR
+            @endif
         </td>
     </tr>
 </table>

@@ -19,7 +19,16 @@
                     <tr>
                         <td>{{ $item->productId }}</td>
                         <td>{{ $item->image }}</td>
-                        <td><a href="/products/{{ $item->url }}/{{ $item->colour }}">{{ $item->title_cz }}</a></td>
+                        <td>
+                            <a href="/products/{{ $item->url }}/{{ $item->colour }}">
+                                {{-- Show title according to the language --}}
+                                @if(App::isLocale('cs'))
+                                    {{ $item->title_cz }}
+                                @else
+                                    {{ $item->title_en }}
+                                @endif
+                            </a>
+                        </td>
                         <td>
                             <form action="/change-quantity" method="post">
                                 @csrf
@@ -30,8 +39,19 @@
                                 <input type="number" name="quantity" min="1" value="{{ $item->quantity }}">
                             </form>
                         </td>
-                        <td class="product-price">{{ $item->price }} EUR</td>
-                        <td><span class="product-total">{{ $item->price * $item->quantity }}</span> EUR</td>
+                        {{-- Show currency according to the language --}}
+                        @if(App::isLocale('cs'))
+                            <td class="product-price">{{ App\Classes\CurrencyConversion::EURtoCZK($item->price) }} CZK</td>
+                            <td>
+                                <span class="product-total">
+                                    {{ App\Classes\CurrencyConversion::EURtoCZK($item->price) * $item->quantity }}
+                                </span> CZK
+                            </td>
+                        @else
+                            <td class="product-price">{{ $item->price }} EUR</td>
+                            <td><span class="product-total">{{ $item->price * $item->quantity }}</span> EUR</td>
+                        @endif
+
                         <td>{{ $item->colour }}</td>
                         <td>{{ $item->size }}</td>
                         <td>

@@ -21,14 +21,16 @@ class OrderConfirmation extends Mailable
     public $subtotalEUR;
     public $postageCZK;
     public $postageEUR;
+    public $bankTransfer;
 
-    public function __construct($products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR)
+    public function __construct($products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR, $transfer)
     {
         $this->products = $products;
         $this->subtotalCZK = $subtotalCZK;
         $this->subtotalEUR = $subtotalEUR;
         $this->postageCZK = $postageCZK;
         $this->postageEUR = $postageEUR;
+        $this->bankTransfer = $transfer;
     }
 
     /**

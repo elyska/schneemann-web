@@ -7,7 +7,14 @@
 @section('content')
     <div class="container">
         {{ $product->id }}
-        <h1>{{ $product->title_cz }}</h1>
+
+        {{-- Show title according to the language --}}
+        @if(App::isLocale('cs'))
+            <h1>{{ $product->title_cz }}</h1>
+        @else
+            <h1>{{ $product->title_en }}</h1>
+        @endif
+
         {{-- ********* Product does not have colour variants ******* --}}
         @if(count($product->colours) == 0)
             Product images
@@ -51,9 +58,14 @@
 
         @endif
 
-
-        <p>{{ $product->price }} EUR</p>
-        <p>{{ $product->description_cz }}</p>
+        {{-- Show currency and description according to the language --}}
+        @if(App::isLocale('cs'))
+            <p>{{ App\Classes\CurrencyConversion::EURtoCZK($product->price) }} CZK</p>
+            <p>{{ $product->description_cz }}</p>
+        @else
+            <p>{{ $product->price }} EUR</p>
+            <p>{{ $product->description_en }}</p>
+        @endif
 
         <form action="/add-to-cart" method="post">
             @csrf

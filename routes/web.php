@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes(['verify' => true]);
+
+// Mail preview
+Route::get('/mailable', function (\Illuminate\Http\Request $request) {
+
+    $cookieObj = json_decode($request->cookie('cartItems'));
+    $products = Product::getCartItems($cookieObj);
+    return new App\Mail\OrderConfirmation($products, 2500, 100, 25, 1, true);
+});
 
 // General
 Route::get('/', [App\Http\Controllers\GeneralController::class, 'index']);

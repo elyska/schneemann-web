@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ShippingPrice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 
@@ -44,13 +45,15 @@ class OrderController extends Controller
 
         // get subtotal in EUR
         $subtotalEUR = Product::getSubtotal($cartProducts);
+        $subtotalCZK = CurrencyConversion::EURtoCZK($subtotalEUR);
 
         return view('delivery-payment-selection',[
             "countries" => $countries,
             "cartItems" => $cartProducts,
             "postageEUR" => $postageEUR,
             "postageCZK" => $postageCZK,
-            "subtotalEUR" => $subtotalEUR
+            "subtotalEUR" => $subtotalEUR,
+            "subtotalCZK" => $subtotalCZK,
         ]);
     }
 
@@ -79,12 +82,14 @@ class OrderController extends Controller
 
         // get subtotal in EUR
         $subtotalEUR = Product::getSubtotal($cartProducts);
+        $subtotalCZK = CurrencyConversion::EURtoCZK($subtotalEUR);
 
         return view("layouts.partials.order-summary", [
             "cartItems" => $cartProducts,
             "postageEUR" => $postageEUR,
             "postageCZK" => $postageCZK,
-            "subtotalEUR" => $subtotalEUR
+            "subtotalEUR" => $subtotalEUR,
+            "subtotalCZK" => $subtotalCZK,
         ]);
 
     }
@@ -122,6 +127,10 @@ class OrderController extends Controller
             "agreement" => 'required'
         ]);
 
+        // get currency
+        if(App::isLocale('cs')) $currency = "CZK";
+        else $currency = "EUR";
+
         // get destination
         $destination = $request->cookie('destination');
 
@@ -142,7 +151,13 @@ class OrderController extends Controller
 
         // send emails
         $email = $request->get("email");
-        Mail::to($email)->send(new OrderConfirmation($products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR));
+        $transfer = false;
+        if($request->hasCookie("payment")) {
+            // get payment cookie
+            $payment = $request->cookie('payment');
+            if ($payment == "transfer") $transfer = true;
+        }
+        Mail::to($email)->send(new OrderConfirmation($products, $subtotalCZK, $subtotalEUR, $postageCZK, $postageEUR, $transfer));
 
         // set orderSent cookie
         Cookie::queue('order-success', true, 43800);
