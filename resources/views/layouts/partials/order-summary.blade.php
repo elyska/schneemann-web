@@ -13,7 +13,7 @@
                 @endif
             </td>
             <td>
-                {{ $item->quantity }} ks
+                {{ $item->quantity }} {{  __("ks") }}
             </td>
 
             {{-- Show currency according to the language --}}
@@ -32,7 +32,7 @@
 </table>
 <table class="table">
     <tr>
-        <td>Subtotal</td>
+        <td>{{  __("Subtotal") }}</td>
         <td>
         {{-- Show currency according to the language --}}
         @if(App::isLocale('cs'))
@@ -44,7 +44,7 @@
     </tr>
     @unless(is_null($postageEUR))
     <tr>
-        <td>Shipping</td>
+        <td>{{  __("Shipping") }}</td>
         <td>
             {{-- Show currency according to the language --}}
             @if(App::isLocale('cs'))
@@ -56,7 +56,7 @@
     </tr>
     @endunless
     <tr>
-        <td>Total</td>
+        <td>{{  __("Total") }}</td>
         <td>
             {{-- Show currency according to the language --}}
             @if(App::isLocale('cs'))

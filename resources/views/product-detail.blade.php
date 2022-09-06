@@ -79,7 +79,7 @@
                 {{-- Select size, if sizes are available --}}
                 @if(count($product->colours[0]->sizes) > 0)
                     <p>
-                        <label for="size">Select Size</label>
+                        <label for="size">{{  __("Select size") }}</label>
                         <select name="size">
                             @foreach($product->colours[0]->sizes as $size)
                                 <option value="{{ $size->size }}">{{ $size->size }}</option>
@@ -91,11 +91,11 @@
             @endif
 
             <p>
-                <label for="quantity">Quantity</label>
+                <label for="quantity">{{  __("Quantity") }}</label>
                 <input type="number" name="quantity" value="1" min="1">
             </p>
 
-            <button type="submit">Add to cart</button>
+            <button type="submit">{{  __("Add to cart") }}</button>
         </form>
         @if (session('status'))
             <div class="alert alert-success">

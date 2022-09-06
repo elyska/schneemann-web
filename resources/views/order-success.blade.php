@@ -6,6 +6,6 @@
 
 @section('content')
     <main>
-        Order received successfully
+        {{  __("Order received successfully") }}
     </main>
 @endsection

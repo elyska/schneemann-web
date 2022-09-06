@@ -7,12 +7,12 @@
 @section('content')
 
     <main>
-        <a href="/products">Continue shopping</a>
+        <a href="/products">{{  __("Continue shopping") }}</a>
 
-        <h1>Cart</h1>
+        <h1>{{  __("Cart") }}</h1>
 
         @if(count($cartItems) == 0)
-            <p>Cart is empty.</p>
+            <p>{{  __("Cart is empty") }}.</p>
         @else
             <table class="table">
                 @foreach($cartItems as $item)
@@ -60,14 +60,14 @@
                                 <input type="hidden" name="productId" value="{{ $item->productId }}">
                                 <input type="hidden" name="colour" value="{{ $item->colour }}">
                                 <input type="hidden" name="size" value="{{ $item->size }}">
-                                <button type="submit">Remove from cart</button>
+                                <button type="submit">{{  __("Remove from cart") }}</button>
                             </form>
                         </td>
                     </tr>
                 @endforeach
             </table>
 
-            <a href="{{ route('deliveryPayment') }}">Continue</a>
+            <a href="{{ route('deliveryPayment') }}">{{  __("Continue") }}</a>
 
         @endif
 

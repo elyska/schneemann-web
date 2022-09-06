@@ -6,16 +6,16 @@
 
 @section('content')
     <div class="container">
-        <h1>Products</h1>
+        <h1>{{  __("Products") }}</h1>
 
         <table class="table">
             <tr>
                 <td>Id</td>
-                <td>Title</td>
+                <td>{{  __("Title") }}</td>
                 <td>Url</td>
                 <td>Image</td>
-                <td>Colour</td>
-                <td>Size</td>
+                <td>{{  __("Colour") }}</td>
+                <td>{{  __("Size") }}</td>
             </tr>
             @foreach($products as $product)
                 <tr>

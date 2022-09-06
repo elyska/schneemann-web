@@ -21,7 +21,7 @@
     {{  __("You can find the order details below") }}.
 </p>
 
-<h1>Your Order</h1>
+<h1>{{  __("Your Order") }}</h1>
 <table style="width: 100%">
 @foreach($products as $product)
     <tr>
@@ -37,7 +37,7 @@
             {{ $product->size }} <br />
         </td>
         <td style="border-top: 1px solid #edeff2">
-            {{ $product->quantity }} ks
+            {{ $product->quantity }} {{  __("ks") }}
         </td>
         <td style="border-top: 1px solid #edeff2">
         {{-- Show currency according to the language --}}
@@ -51,7 +51,7 @@
 @endforeach
     <tr>
         <td colspan="2" style="border-top: 1px solid #edeff2">
-            Subtotal
+            {{  __("Subtotal") }}
         </td>
         <td style="border-top: 1px solid #edeff2">
             {{-- Show currency according to the language --}}
@@ -64,7 +64,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            Shipping
+            {{  __("Shipping") }}
         </td>
         <td>
             {{-- Show currency according to the language --}}
@@ -77,7 +77,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            Total
+            {{  __("Total") }}
         </td>
         <td>
 
@@ -94,7 +94,7 @@
 <br />
 
 <p>
-    Kind regards, <br />
+    {{  __("Kind regards") }}, <br />
     {{ config('app.name') }}
 </p>
 
